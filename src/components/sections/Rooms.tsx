@@ -65,8 +65,8 @@ export function Rooms() {
           <div className="order-1 lg:order-2 relative">
             <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-xl">
               <img
-                src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=2070&auto=format&fit=crop"
-                alt="Hotel Room"
+                src="/images/Suite01.jpg"
+                alt="Royal Phuket City Suite"
                 className="w-full h-full object-cover"
               />
             </div>

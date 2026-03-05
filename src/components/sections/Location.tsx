@@ -59,7 +59,7 @@ export function Location() {
           <div className="relative">
             <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-xl">
               <img
-                src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?q=80&w=2001&auto=format&fit=crop"
+                src="/images/old-town.jpg"
                 alt="Phuket Old Town"
                 className="w-full h-full object-cover"
               />

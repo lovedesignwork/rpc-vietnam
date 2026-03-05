@@ -3,6 +3,25 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
+const miceFacilityData = [
+  { name: 'Grand Ballroom', area: '1,637', height: '6', classroom: '800', theatre: '2,300', uShape: '-', boardroom: '-', cocktail: '2,000', banquetBuffet: '600', banquetSet: '1,000' },
+  { name: 'Ballroom 1 & 2', area: '1,023', height: '6', classroom: '450', theatre: '1,000', uShape: '120', boardroom: '120', cocktail: '1,200', banquetBuffet: '350', banquetSet: '450' },
+  { name: 'Ballroom 1 & 4', area: '996', height: '-', classroom: '400', theatre: '900', uShape: '-', boardroom: '-', cocktail: '700', banquetBuffet: '350', banquetSet: '450' },
+  { name: 'Ballroom 2 & 3', area: '642', height: '-', classroom: '200', theatre: '400', uShape: '60', boardroom: '60', cocktail: '250', banquetBuffet: '200', banquetSet: '300' },
+  { name: 'Ballroom 1', area: '617', height: '6', classroom: '300', theatre: '500', uShape: '60', boardroom: '60', cocktail: '250', banquetBuffet: '200', banquetSet: '250' },
+  { name: 'Ballroom 2', area: '405', height: '6', classroom: '140', theatre: '300', uShape: '45', boardroom: '45', cocktail: '150', banquetBuffet: '170', banquetSet: '200' },
+  { name: 'Ballroom 3', area: '236', height: '3', classroom: '-', theatre: '-', uShape: '-', boardroom: '-', cocktail: '-', banquetBuffet: '-', banquetSet: '-' },
+  { name: 'Ballroom 4', area: '378', height: '3', classroom: '-', theatre: '-', uShape: '-', boardroom: '-', cocktail: '-', banquetBuffet: '-', banquetSet: '-' },
+  { name: 'Raya', area: '186', height: '3', classroom: '80', theatre: '180', uShape: '40', boardroom: '40', cocktail: '100', banquetBuffet: '70', banquetSet: '90' },
+  { name: 'Hay', area: '109', height: '3', classroom: '30', theatre: '40', uShape: '20', boardroom: '20', cocktail: '30', banquetBuffet: '30', banquetSet: '40' },
+  { name: 'Nakha', area: '70', height: '3', classroom: '20', theatre: '30', uShape: '20', boardroom: '20', cocktail: '20', banquetBuffet: '-', banquetSet: '30' },
+  { name: 'Hay - Nakha', area: '179', height: '3', classroom: '60', theatre: '100', uShape: '40', boardroom: '40', cocktail: '70', banquetBuffet: '60', banquetSet: '70' },
+  { name: 'Bon', area: '66', height: '3', classroom: '20', theatre: '40', uShape: '20', boardroom: '20', cocktail: '20', banquetBuffet: '-', banquetSet: '30' },
+  { name: 'Maithon', area: '77', height: '3', classroom: '20', theatre: '40', uShape: '20', boardroom: '20', cocktail: '20', banquetBuffet: '-', banquetSet: '30' },
+  { name: 'Bon - Maithong', area: '142', height: '3', classroom: '60', theatre: '80', uShape: '40', boardroom: '40', cocktail: '60', banquetBuffet: '50', banquetSet: '60' },
+  { name: 'Si-Rea', area: '26', height: '3', classroom: '-', theatre: '-', uShape: '-', boardroom: '10', cocktail: '-', banquetBuffet: '-', banquetSet: '-' },
+];
+
 const ballroomCapacity = [
   { setup: 'Classroom', capacity: '800' },
   { setup: 'Theater', capacity: '2,300' },
@@ -76,14 +95,15 @@ export function Spaces() {
         </div>
 
         {activeTab === 'ballroom' && (
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-lg">
-              <img
-                src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=2098&auto=format&fit=crop"
-                alt="Grand Ballroom"
-                className="w-full h-full object-cover"
-              />
-            </div>
+          <div className="space-y-12">
+            <div className="grid lg:grid-cols-2 gap-12 items-start">
+              <div className="aspect-[4/3] rounded-sm overflow-hidden shadow-lg">
+                <img
+                  src="/images/rpc-ballroom.jpg"
+                  alt="RPC Grand Ballroom"
+                  className="w-full h-full object-cover"
+                />
+              </div>
             <div>
               <h3 className="font-serif text-3xl font-semibold text-navy-900 mb-4">
                 Phuket Grand Ballrooms
@@ -123,6 +143,62 @@ export function Spaces() {
                 <span className="px-3 py-1 bg-gold-100 text-gold-700 text-sm rounded-full">
                   Màn chiếu đa dạng
                 </span>
+              </div>
+            </div>
+          </div>
+
+            {/* Ballroom Floor Plan Map */}
+            <div>
+              <h3 className="font-serif text-xl font-semibold text-navy-900 mb-4">
+                Sơ đồ bố trí Grand Ballroom
+              </h3>
+              <div className="rounded-lg overflow-hidden shadow-lg border border-cream-200">
+                <img
+                  src="/images/map-ballroom.jpg"
+                  alt="Sơ đồ bố trí Grand Ballroom"
+                  className="w-full h-auto object-contain"
+                />
+              </div>
+            </div>
+
+            {/* MICE Facility Table */}
+            <div>
+              <h3 className="font-serif text-xl font-semibold text-navy-900 mb-4 text-center">
+                MICE Facility
+              </h3>
+              <div className="overflow-x-auto rounded-lg border border-cream-200 shadow-sm">
+                <table className="w-full min-w-[900px] text-sm">
+                  <thead>
+                    <tr className="bg-[#c9a962] text-navy-900">
+                      <th className="px-3 py-3 text-left font-semibold">Name</th>
+                      <th className="px-3 py-3 text-center font-semibold">Area (m²)</th>
+                      <th className="px-3 py-3 text-center font-semibold">Height (m)</th>
+                      <th className="px-3 py-3 text-center font-semibold">Classroom</th>
+                      <th className="px-3 py-3 text-center font-semibold">Theatre</th>
+                      <th className="px-3 py-3 text-center font-semibold">U-Shape</th>
+                      <th className="px-3 py-3 text-center font-semibold">Boardroom</th>
+                      <th className="px-3 py-3 text-center font-semibold">Cocktail</th>
+                      <th className="px-3 py-3 text-center font-semibold">Banquet Buffet</th>
+                      <th className="px-3 py-3 text-center font-semibold">Banquet Set</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {miceFacilityData.map((row, i) => (
+                      <tr key={i} className={i % 2 === 0 ? 'bg-cream-50' : 'bg-white'}>
+                        <td className="px-3 py-2.5 font-medium text-navy-900">{row.name}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.area}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.height}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.classroom}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.theatre}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.uShape}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.boardroom}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.cocktail}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.banquetBuffet}</td>
+                        <td className="px-3 py-2.5 text-center text-navy-700">{row.banquetSet}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

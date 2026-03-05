@@ -34,6 +34,7 @@ export async function GET(request: NextRequest) {
       recentInquiries,
       dailyViews,
       events,
+      devices,
     ] = await Promise.all([
       supabase.from('page_views').select('*', { count: 'exact', head: true }),
       supabase.from('page_views').select('*', { count: 'exact', head: true }).gte('created_at', today),
@@ -50,6 +51,7 @@ export async function GET(request: NextRequest) {
         .gte('created_at', monthAgo)
         .order('created_at', { ascending: true }),
       supabase.from('events').select('event_type, element_id'),
+      supabase.from('page_views').select('device_type'),
     ]);
 
     const countryData = countries.data?.reduce((acc: Record<string, number>, row) => {
@@ -102,6 +104,16 @@ export async function GET(request: NextRequest) {
       ? ((inquiriesCount / totalViewsCount) * 100).toFixed(2)
       : '0.00';
 
+    const deviceData = devices.data?.reduce((acc: Record<string, number>, row) => {
+      const d = row.device_type || 'unknown';
+      acc[d] = (acc[d] || 0) + 1;
+      return acc;
+    }, {});
+
+    const deviceStats = Object.entries(deviceData || {})
+      .sort(([, a], [, b]) => (b as number) - (a as number))
+      .map(([device_type, count]) => ({ device_type, count }));
+
     return NextResponse.json({
       overview: {
         totalViews: totalViewsCount,
@@ -118,6 +130,7 @@ export async function GET(request: NextRequest) {
       topCountries,
       chartData,
       topEvents,
+      deviceStats,
       recentInquiries: recentInquiries.data || [],
     });
   } catch (error) {

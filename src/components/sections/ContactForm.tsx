@@ -4,36 +4,38 @@ import { useState } from 'react';
 import { Send, Phone, Mail, MapPin, Loader2, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { trackEvent } from '@/lib/tracking';
+import { CustomSelect } from '@/components/ui/CustomSelect';
+import { CalendarPicker } from '@/components/ui/CalendarPicker';
 
 const eventTypes = [
-  'Hội nghị',
-  'Training',
-  'Gala',
-  'Meeting',
-  'Khác',
+  { value: 'hoi-nghi', label: 'Hội nghị' },
+  { value: 'training', label: 'Training' },
+  { value: 'gala', label: 'Gala' },
+  { value: 'meeting', label: 'Meeting' },
+  { value: 'khac', label: 'Khác' },
 ];
 
 const setupTypes = [
-  'Theater',
-  'Classroom',
-  'Banquet',
-  'U-Shape',
-  'Boardroom',
-  'Cocktail',
+  { value: 'theater', label: 'Theater' },
+  { value: 'classroom', label: 'Classroom' },
+  { value: 'banquet', label: 'Banquet' },
+  { value: 'u-shape', label: 'U-Shape' },
+  { value: 'boardroom', label: 'Boardroom' },
+  { value: 'cocktail', label: 'Cocktail' },
 ];
 
 const technicalOptions = [
-  'LED',
-  'Projector',
-  'Âm thanh',
-  'Ánh sáng',
+  { value: 'led', label: 'LED' },
+  { value: 'projector', label: 'Projector' },
+  { value: 'audio', label: 'Âm thanh' },
+  { value: 'lighting', label: 'Ánh sáng' },
 ];
 
 const fnbOptions = [
-  'Coffee break',
-  'Lunch',
-  'Dinner',
-  'Banquet',
+  { value: 'coffee-break', label: 'Coffee break' },
+  { value: 'lunch', label: 'Lunch' },
+  { value: 'dinner', label: 'Dinner' },
+  { value: 'banquet', label: 'Banquet' },
 ];
 
 export function ContactForm() {
@@ -96,7 +98,7 @@ export function ContactForm() {
     return (
       <section id="lien-he" className="py-24 bg-cream-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white rounded-sm shadow-xl p-12">
+          <div className="bg-white rounded-2xl shadow-xl p-12">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-10 h-10 text-green-500" />
             </div>
@@ -132,7 +134,7 @@ export function ContactForm() {
 
         <div className="grid lg:grid-cols-3 gap-12">
           <div className="lg:col-span-2">
-            <form onSubmit={handleSubmit} className="bg-white rounded-sm shadow-xl p-8">
+            <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-xl p-8 md:p-10">
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="label">Họ tên *</label>
@@ -184,17 +186,13 @@ export function ContactForm() {
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="label">Loại sự kiện *</label>
-                  <select
-                    required
-                    className="input-field"
+                  <CustomSelect
+                    options={eventTypes}
                     value={formData.event_type}
-                    onChange={e => setFormData({ ...formData, event_type: e.target.value })}
-                  >
-                    <option value="">Chọn loại sự kiện</option>
-                    {eventTypes.map(type => (
-                      <option key={type} value={type}>{type}</option>
-                    ))}
-                  </select>
+                    onChange={(value) => setFormData({ ...formData, event_type: value })}
+                    placeholder="Chọn loại sự kiện"
+                    required
+                  />
                 </div>
                 <div>
                   <label className="label">Số khách dự kiến *</label>
@@ -212,52 +210,57 @@ export function ContactForm() {
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="label">Ngày dự kiến</label>
-                  <input
-                    type="date"
-                    className="input-field"
+                  <CalendarPicker
                     value={formData.event_date}
-                    onChange={e => setFormData({ ...formData, event_date: e.target.value })}
+                    onChange={(value) => setFormData({ ...formData, event_date: value })}
+                    placeholder="Chọn ngày sự kiện"
                   />
                 </div>
                 <div>
                   <label className="label">Kiểu setup</label>
-                  <select
-                    className="input-field"
+                  <CustomSelect
+                    options={setupTypes}
                     value={formData.setup_type}
-                    onChange={e => setFormData({ ...formData, setup_type: e.target.value })}
-                  >
-                    <option value="">Chọn kiểu setup</option>
-                    {setupTypes.map(type => (
-                      <option key={type} value={type}>{type}</option>
-                    ))}
-                  </select>
+                    onChange={(value) => setFormData({ ...formData, setup_type: value })}
+                    placeholder="Chọn kiểu setup"
+                  />
                 </div>
               </div>
 
               <div className="mb-6">
                 <label className="label">Nhu cầu breakout rooms</label>
-                <div className="flex items-center gap-6">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="breakout"
-                      value="no"
-                      checked={formData.breakout_needed === 'no'}
-                      onChange={e => setFormData({ ...formData, breakout_needed: e.target.value })}
-                      className="mr-2"
-                    />
-                    Không
+                <div className="flex items-center gap-4 flex-wrap">
+                  <label className="flex items-center gap-2 cursor-pointer group">
+                    <div className="relative">
+                      <input
+                        type="radio"
+                        name="breakout"
+                        value="no"
+                        checked={formData.breakout_needed === 'no'}
+                        onChange={e => setFormData({ ...formData, breakout_needed: e.target.value })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-5 h-5 border-2 border-cream-300 rounded-full peer-checked:border-gold-500 peer-checked:bg-gold-500 transition-all flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100 transition-opacity" />
+                      </div>
+                    </div>
+                    <span className="text-navy-700 group-hover:text-navy-900 transition-colors">Không</span>
                   </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="breakout"
-                      value="yes"
-                      checked={formData.breakout_needed === 'yes'}
-                      onChange={e => setFormData({ ...formData, breakout_needed: e.target.value })}
-                      className="mr-2"
-                    />
-                    Có
+                  <label className="flex items-center gap-2 cursor-pointer group">
+                    <div className="relative">
+                      <input
+                        type="radio"
+                        name="breakout"
+                        value="yes"
+                        checked={formData.breakout_needed === 'yes'}
+                        onChange={e => setFormData({ ...formData, breakout_needed: e.target.value })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-5 h-5 border-2 border-cream-300 rounded-full peer-checked:border-gold-500 peer-checked:bg-gold-500 transition-all flex items-center justify-center">
+                        <div className="w-2 h-2 bg-white rounded-full opacity-0 peer-checked:opacity-100 transition-opacity" />
+                      </div>
+                    </div>
+                    <span className="text-navy-700 group-hover:text-navy-900 transition-colors">Có</span>
                   </label>
                   {formData.breakout_needed === 'yes' && (
                     <input
@@ -274,32 +277,48 @@ export function ContactForm() {
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="label">Nhu cầu kỹ thuật</label>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2">
                     {technicalOptions.map(option => (
-                      <label key={option} className="flex items-center">
+                      <label 
+                        key={option.value} 
+                        className={cn(
+                          "flex items-center gap-2 px-4 py-2.5 rounded-lg border-2 cursor-pointer transition-all",
+                          formData.technical_needs.includes(option.label)
+                            ? "border-gold-500 bg-gold-50 text-gold-700"
+                            : "border-cream-200 bg-cream-50 text-navy-600 hover:border-cream-300"
+                        )}
+                      >
                         <input
                           type="checkbox"
-                          checked={formData.technical_needs.includes(option)}
-                          onChange={() => handleCheckboxChange('technical_needs', option)}
-                          className="mr-2"
+                          checked={formData.technical_needs.includes(option.label)}
+                          onChange={() => handleCheckboxChange('technical_needs', option.label)}
+                          className="sr-only"
                         />
-                        {option}
+                        <span className="text-sm font-medium">{option.label}</span>
                       </label>
                     ))}
                   </div>
                 </div>
                 <div>
                   <label className="label">F&B</label>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap gap-2">
                     {fnbOptions.map(option => (
-                      <label key={option} className="flex items-center">
+                      <label 
+                        key={option.value} 
+                        className={cn(
+                          "flex items-center gap-2 px-4 py-2.5 rounded-lg border-2 cursor-pointer transition-all",
+                          formData.fnb_needs.includes(option.label)
+                            ? "border-gold-500 bg-gold-50 text-gold-700"
+                            : "border-cream-200 bg-cream-50 text-navy-600 hover:border-cream-300"
+                        )}
+                      >
                         <input
                           type="checkbox"
-                          checked={formData.fnb_needs.includes(option)}
-                          onChange={() => handleCheckboxChange('fnb_needs', option)}
-                          className="mr-2"
+                          checked={formData.fnb_needs.includes(option.label)}
+                          onChange={() => handleCheckboxChange('fnb_needs', option.label)}
+                          className="sr-only"
                         />
-                        {option}
+                        <span className="text-sm font-medium">{option.label}</span>
                       </label>
                     ))}
                   </div>
@@ -309,7 +328,7 @@ export function ContactForm() {
               <div className="mb-6">
                 <label className="label">Ghi chú khác</label>
                 <textarea
-                  className="input-field min-h-[120px]"
+                  className="input-field min-h-[120px] resize-none"
                   value={formData.message}
                   onChange={e => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Thông tin bổ sung về sự kiện..."
@@ -317,7 +336,7 @@ export function ContactForm() {
               </div>
 
               {error && (
-                <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-sm">
+                <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-lg border border-red-100">
                   {error}
                 </div>
               )}
@@ -326,7 +345,7 @@ export function ContactForm() {
                 type="submit"
                 disabled={isSubmitting}
                 className={cn(
-                  'btn-primary w-full',
+                  'btn-primary w-full text-base',
                   isSubmitting && 'opacity-70 cursor-not-allowed'
                 )}
               >
@@ -346,7 +365,7 @@ export function ContactForm() {
           </div>
 
           <div>
-            <div className="bg-navy-900 text-white rounded-sm p-8 sticky top-24">
+            <div className="bg-navy-900 text-white rounded-2xl p-8 sticky top-24">
               <h3 className="font-serif text-2xl font-semibold mb-6">Liên hệ trực tiếp</h3>
               
               <div className="space-y-6">
@@ -365,11 +384,11 @@ export function ContactForm() {
                   <div>
                     <p className="font-medium">Điện thoại</p>
                     <a
-                      href="tel:+6676233333"
+                      href="tel:+6676233355"
                       className="text-cream-300 text-sm hover:text-gold-400 transition-colors"
                       data-track="contact_phone"
                     >
-                      +66 76-233-333
+                      +66 76 233 355
                     </a>
                     <div className="text-cream-300 text-sm mt-1">
                       Sales: +66 81 598 9985, +66 94 340 6948
@@ -401,7 +420,7 @@ export function ContactForm() {
 
               <div className="mt-8 pt-6 border-t border-navy-700">
                 <a
-                  href="tel:+6676233333"
+                  href="tel:+6676233355"
                   className="btn-primary w-full justify-center mb-3"
                   data-track="contact_call_cta"
                   data-track-label="Contact Call CTA"

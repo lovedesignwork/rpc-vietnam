@@ -34,10 +34,12 @@ export function Header() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <a href="#" className="flex items-center space-x-2">
-            <span className="font-serif text-xl md:text-2xl font-semibold text-white">
-              Royal Phuket City
-            </span>
+          <a href="#" className="flex items-center">
+            <img 
+              src="/images/logo-white.png" 
+              alt="Royal Phuket City" 
+              className="h-12 md:h-14 w-auto"
+            />
           </a>
 
           <nav className="hidden lg:flex items-center space-x-8">
@@ -54,13 +56,13 @@ export function Header() {
 
           <div className="hidden lg:flex items-center space-x-4">
             <a
-              href="tel:+6676233333"
+              href="tel:+6676233355"
               className="flex items-center space-x-2 text-cream-100 hover:text-gold-400 transition-colors"
               data-track="header_phone"
               data-track-label="Header Phone Click"
             >
               <Phone className="w-4 h-4" />
-              <span className="text-sm">+66 76-233-333</span>
+              <span className="text-sm">+66 76 233 355</span>
             </a>
             <a
               href="#lien-he"
@@ -97,11 +99,11 @@ export function Header() {
             ))}
             <div className="pt-4 border-t border-navy-700 space-y-3">
               <a
-                href="tel:+6676233333"
+                href="tel:+6676233355"
                 className="flex items-center space-x-2 text-cream-100 py-2"
               >
                 <Phone className="w-4 h-4" />
-                <span>+66 76-233-333</span>
+                <span>+66 76 233 355</span>
               </a>
               <a
                 href="#lien-he"

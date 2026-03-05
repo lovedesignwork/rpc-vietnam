@@ -44,8 +44,8 @@ export function MiceVenue() {
           <div className="relative">
             <div className="aspect-[4/3] rounded-sm overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop"
-                alt="MICE Venue"
+                src="/images/ballroom rpc.jpg"
+                alt="RPC Grand Ballroom"
                 className="w-full h-full object-cover"
               />
             </div>
