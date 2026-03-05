@@ -11,7 +11,7 @@ export function Footer() {
           </div>
           <div className="text-sm text-center md:text-right">
             <p>&copy; {currentYear} Royal Phuket City Hotel. All rights reserved.</p>
-            <p className="mt-1">Phuket&apos;s Premier MICE Venue</p>
+            <p className="mt-1">Địa điểm MICE hàng đầu Phuket</p>
           </div>
         </div>
       </div>
