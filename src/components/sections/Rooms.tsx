@@ -35,7 +35,7 @@ export function Rooms() {
 
             <div className="grid grid-cols-2 gap-3 mb-8">
               {roomTypes.map((room, index) => (
-                <div key={index} className="flex justify-between items-center p-3 bg-cream-50 rounded-sm">
+                <div key={index} className="flex justify-between items-center p-3 bg-cream-200 rounded-sm">
                   <span className="text-sm text-navy-700">{room.name}</span>
                   <span className="text-sm font-medium text-gold-600">{room.size}</span>
                 </div>
